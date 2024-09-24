@@ -154,3 +154,31 @@ resource "yandex_resourcemanager_folder_iam_binding" "dataproc" {
 </details>
 
 
+<details>
+<summary>
+Анализ качества и очистка датасета мошеннических финансовых операций
+</summary>
+  В результате анализа данных были выделены следующие проблемы:
+  
+  - Удаление дубликатов
+  - Преобразование типов данных (например, tx_amount к типу Float)
+  - Удаление строк с пропущенными значениями
+  
+  Для очистки данных использовался Spark:
+  
+  ```
+    df = df.withColumn("tx_amount", col("tx_amount").cast(FloatType()))
+    df = df.na.drop("any")
+    df = df.dropDuplicates(['transaction_id'])
+
+  ```
+
+После очистки данных и их преобразования в формат .parquet, данные были загружены в следующий бакет:
+
+ ```
+s3://mlops-data-ready/
+ ```
+</details>
+
+
+
