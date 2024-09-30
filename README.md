@@ -181,4 +181,16 @@ s3://mlops-data-ready/
 </details>
 
 
+<details>
+<summary>
+Периодический запуск процедуры очистки датасета мошеннических финансовых транзакций
+</summary>
+  Файл с DAG:
+  
+  Скриншот с запусками процедуры очистки датасета по расписанию:
+  ![image](https://github.com/user-attachments/assets/2f6e9f8e-c02b-4ef5-9d75-4ac615af1010)
+
+</details>
+
+
 
