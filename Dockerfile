@@ -1,0 +1,7 @@
+FROM postgres:latest
+
+ENV POSTGRES_USER otus_mlflow_database_user
+ENV POSTGRES_PASSWORD otus_mlflow_database_password
+ENV POSTGRES_DB mlflow_database
+
+EXPOSE 5432
