@@ -205,4 +205,53 @@ s3://mlops-data-ready/
 </details>
 
 
+<details>
+<summary>
+Регулярное переобучение модели обнаружения мошенничества
+</summary>
+  
+  В ходе выполенения задания были выполнены следующие действия:
+
+  ## 1. Создание и запуск виртуальных машин
+В Яндкс.Клауд были созданы три виртуальные машины со следующими характеристиками:
+1. MLflow
+2. Postgres
+3. Airflow
+![image](https://github.com/user-attachments/assets/b3f9c588-a749-4eec-9721-a24c1f6caa71)
+
+  ## 2. Установка зависимостей
+  1. Для Airflow све необходимые зависимости были установлены в прошлом домашнем задании.
+  2. Для MLflow были устновлены:
+     * mlflow
+     * psycopg2-binary
+     * boto3
+  Файл с кодом для запуска mlflow-сервера:
+  https://github.com/darya55k/MLOps/blob/main/mlflow_server.sh
+   3. Для Postgres был создан Dockerfile. База данных запускалась в докер-контейнере.
+      https://github.com/darya55k/MLOps/blob/main/Dockerfile
+## 3. Создание скриптов
+1. Для MLflow использовался следующий скрипт:
+   https://github.com/darya55k/MLOps/blob/main/mlops_pipe_final.py
+2. Для Airflow был доработан даг:
+   https://github.com/darya55k/MLOps/blob/main/data_proc_webinar1.py
+
+## 4. Результаты
+Так выглядит даг, если новых данных не было обнаружено:
+![image](https://github.com/user-attachments/assets/40d044d3-8ddf-4af2-a2c1-d0817955a031)
+
+И так, если новые данные присутсвуют:
+![image](https://github.com/user-attachments/assets/ae82aa3d-1fe0-46c1-b2c2-5181de88c0c1)
+
+Результаты, записанные в MLflow:
+![image](https://github.com/user-attachments/assets/9ef0395d-f746-4fc8-9d6a-08d0ab3daeda)
+
+![image](https://github.com/user-attachments/assets/7ae5e291-9148-4911-bd92-b7ee37f71af9)
+
+Запись данных а бакет:
+![image](https://github.com/user-attachments/assets/3898c4c2-4bc6-418e-ad73-dad96e34c573)
+
+
+</details>
+
+
 
