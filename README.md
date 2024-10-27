@@ -289,10 +289,91 @@ https://github.com/darya55k/MLOps/blob/main/mlops_pipe_ab2.py
 
 ![image](https://github.com/user-attachments/assets/e199f7de-5f68-417c-ad83-e2efa1027287)
 
+</details>
 
 
+<details>
+<summary>
+Инференс на потоке
+</summary>
+  
+  В ходе выполенения задания были выполнены следующие действия:
+
+  ## 1. Виртуальные машины
+Для выполенения работы были использованы виртуальные машины, созданные в рамках выполенния предыдуших домашних заданий:
+1. MLflow
+2. Postgres
+3. Airflow
+![image](https://github.com/user-attachments/assets/b3f9c588-a749-4eec-9721-a24c1f6caa71)
+
+## 2. Создание кластера с Kafka
+Для выполнения ДЗ необходимо было запустить систему Apache Kafka на отдельной виртуальной машине Yandex cloud.
+![image](https://github.com/user-attachments/assets/9dc15d80-4bc9-451d-8144-38e6b5faf843)
+
+## 3. Настройка Kafka
+1. Создала топики input и predictions
+   ![image](https://github.com/user-attachments/assets/ca9e60da-8342-4724-a5f1-4c82919d99af)
+
+2. Создала пользователей:
+   ![image](https://github.com/user-attachments/assets/73b02bca-6857-4fd9-aa36-6fc56ffabbdb)
+К Kafka UI подключалась через admin, так как у него есть все досупы и права.
+
+## 4. Подключение к Kafka UI
+Для подключения к Kafka UI необходимо было установить:
+1. Сертификат:
+ ```
+mkdir -p /usr/local/share/ca-certificates/Yandex && \
+wget "https://storage.yandexcloud.net/cloud-certs/CA.pem" \
+     --output-document /usr/local/share/ca-certificates/Yandex/YandexInternalRootCA.crt && \
+chmod 0655 /usr/local/share/ca-certificates/Yandex/YandexInternalRootCA.crt
+ ```
+2. Зависимости:
+ ```
+sudo apt update && sudo apt install --yes python3 python3-pip libsnappy-dev && \
+pip3 install kafka-python lz4 python-snappy crc32c
+ ```
+
+3. Также в переменных указала свои данные для подключения
+ ```
+KAFKA_UI_STOREPASS=111111
+KAFKA_CLUSTERS_NAME=kafka693
+KAFKA_CLUSTERS_BOOTSTRAPSERVERS=rc1a-9912bk99ei6nptmg.mdb.yandexcloud.net:9091,rc1b-8bgoe5q76dij6dhh.mdb.yandexcloud.net:9091,rc1d-98kkqdi64ek3d44h.mdb.yandexcloud.net:9091
+KAFKA_USER_LOGIN=mylogin
+KAFKA_USER_PASSWORD=mypass
+KSQLDB_STOREPASS=kuCxDPVj0mh4
+STOREPASS=111111
+ ```
+4. Приложение запустилось по адресу http://158.160.79.228:8282
+
+Из интерсейса можно налюдать за сообщениями
+
+![image](https://github.com/user-attachments/assets/7db99b21-35e8-4a1d-a5d5-fbc6821b4eef)
+
+## 5. Доработка скриптов
+1. Продюсер для отправки данных в Kafka:
+   
+https://github.com/darya55k/MLOps/blob/main/producer.py
+
+* Скрипт читает строки из файла 2019-08-22.txt, делит их на чанки и отправляет в топик input.
+* Во время отправки метрика скорости передачи (transactions_per_second_sent_to_kafka) логируется в MLflow, чтобы отслеживать производительность загрузки данных.
+
+2. Потребитель для обработки данных:
+   
+https://github.com/darya55k/MLOps/blob/main/consumer.py
+
+* Cкрипт подключается к Kafka и прослушивает топик inputs, куда скрипт продюсера отправляет данные.
+* Потребитель обрабатывает каждое сообщение: очищает его, трансформирует и применяет модель для предсказания.
+* Затем результаты предсказания отправляются в топик predictions.
+* В процессе метрики производительности также логируются в MLflow.
+
+## 6. Графики в MLflow
+В результате получился следующий гафик
+![image](https://github.com/user-attachments/assets/a6a90723-0c47-4bed-860e-fa694a188c10)
+
+По графику можно следать вывод, что кластер обрабатывает около 4 тысяч транзакций в секунду, а источник генерировал около 25 тысяч транзакций. 
 
 </details>
+
 
 
 
