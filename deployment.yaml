@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment
+  labels:
+    app: predict
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: predict
+  template:
+    metadata:
+      labels:
+        app: predict
+    spec:
+      containers:
+      - name: predict
+        image: darya55k/fast-api-service:84cc8e488b30cf5f93bae082521d2670a7189bb6
+        ports:
+        - containerPort: 8890
