@@ -374,6 +374,44 @@ https://github.com/darya55k/MLOps/blob/main/consumer.py
 
 </details>
 
+<details>
+<summary>
+Обновление моделей
+</summary>
+  
+В ходе выполенения задания были выполнены следующие действия:
+
+## 1. REST API для модели
+Для выполенения работы был написан fast api сервис: https://github.com/darya55k/MLOps/blob/main/app.py
+## 2. Настройка Github actions:
+
+Были добавлены следующие секреты:
+![image](https://github.com/user-attachments/assets/50e2c193-da73-47da-b9e9-7bb3d6243fea)
+
+Создан конфигрурационный файл github actions для сборки, тестирования и публикации контейнера: https://github.com/darya55k/MLOps/blob/main/main.yml
+
+![image](https://github.com/user-attachments/assets/1963d39e-10f6-41f6-9ab3-8c2c8a3ea02b)
+
+Публикация в DockerHub:
+![image](https://github.com/user-attachments/assets/866860a8-159f-4623-9868-8dfcca588465)
+
+## 3. Настройка k8s
+k8s был развернут с помощью Docker Desktop
+![image](https://github.com/user-attachments/assets/bf60eb35-fcfc-49ee-a070-ad459d48e50f)
+
+Конфигурационные файлы kubernetes для запуска сервиса в kubernetes-кластере:
+
+https://github.com/darya55k/MLOps/blob/main/service.yaml
+
+https://github.com/darya55k/MLOps/blob/main/ingress.yaml
+
+https://github.com/darya55k/MLOps/blob/main/deployment.yaml
+
+Работа сервиса:
+![image](https://github.com/user-attachments/assets/8699b422-87f7-48cd-b3a1-1aca6a6d8cb7)
+
+</details>
+
 
 
 
