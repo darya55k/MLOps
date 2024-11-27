@@ -412,6 +412,49 @@ https://github.com/darya55k/MLOps/blob/main/deployment.yaml
 
 </details>
 
+<details>
+<summary>
+Развертывание модели
+</summary>
+  
+В ходе выполенения задания были выполнены следующие действия:
+
+## 1. Настройка кластера и установка зависимостей:
+1. Был развернут k8s кластер
+![image](https://github.com/user-attachments/assets/23f5e3ed-838f-4e1e-b4f0-02b056309046)
+2. Следующими командами были установлены Prometheus, Grafana и Airflow:
+
+```helm repo add prometheus-community https://prometheus-community.github.io/helm-charts```
+
+```helm install monitoring prometheus-community/kube-prometheus-stack```
+
+```helm install airflow bitnami/airflow```
+
+3. С помощью правила ```(sum(rate(container_cpu_usage_seconds_total{namespace="default"}[1m])) by (pod))*100``` был построен такой дашборд:
+![image](https://github.com/user-attachments/assets/69f142ea-f79d-44be-a76a-cb84d3a71801)
+
+Это правило для Grafana вычисляет использование CPU для каждого пода в пространстве имен default и выражает его в процентах от общего доступного CPU. Оно берет скорость использования CPU за последнюю минуту для каждого контейнера в поде, суммирует эти значения для каждого пода, и умножает на 100, чтобы получить значение в процентах.
+
+Это правило позволяет вам увидеть, сколько процессорных ресурсов использует каждый под за последние 1 минуту, в процентах от общего доступного CPU.
+
+
+Вот так можно посмотреть дашборд для конкретного пода:
+![image](https://github.com/user-attachments/assets/55ccb2ea-5612-432e-80a8-fc293d62b240)
+
+Правило, по которому должны прилетать алерты:
+![image](https://github.com/user-attachments/assets/3fc38426-8bac-44fd-8330-9b749b221450)
+
+Алерты:
+![image](https://github.com/user-attachments/assets/0932941b-d5b2-449e-a2d1-c62aae8e91e6)
+
+Также настроила уведомления в телеграме:
+![image](https://github.com/user-attachments/assets/940f42e5-02b2-40e6-a7f7-b736593ce3b5)
+
+
+
+</details>
+
+
 
 
 
