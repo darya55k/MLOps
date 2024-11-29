@@ -1,0 +1,21 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  namespace: default
+  labels:
+    release: monitoring
+  name: predict
+spec:
+  endpoints:
+    - path: /metrics
+      port: predict
+      scheme: http
+      interval: 5s
+
+  jobLabel: predict
+  namespaceSelector:
+    matchNames:
+      - default
+  selector:
+    matchLabels:
+      app: predict
